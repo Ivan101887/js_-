@@ -35,7 +35,7 @@ init();
 function init() {
   const str = `<img src="./images/${imageData[0].lgSrc}.jpg" alt="${imageData[0].lgSrc}" class="pic__lgImg" width="920" height="600">`;
   setImg();
-  elemPic.children[1].children [0].innerHTML = str;
+  elemPic.children[1].children[0].innerHTML = str;
   changeLgImg();
 }
 
@@ -45,19 +45,21 @@ function setImg() {
     const name = e.smSrc;
     const str = `
       <img src="./images/${name}.jpg" alt="${name}" class="pic__smImg" width="100" height="65" data-order="${i}">`;
-      elemPic.children[0].children[0].innerHTML += str;
+    elemPic.children[0].children[0].innerHTML += str;
   })
 }
 
 // 監聽縮圖點擊事件調換大圖
 function changeLgImg() {
   elemPic.addEventListener('click', (e) => {
-    console.log(e.target);
-    // if (e.target.hasAttribute('data-order')) {
-      const order = parseInt(e.target.dataset.order);
-      const name = imageData[order].lgSrc;
-      const str = `<img src="./images/${name}.jpg" alt="${name}" class="pic__lgImg" width="920" height="600">`;
-      elemPic.children[1].children[0].innerHTML = str;
-    // }
+    // console.log(e.target.parentNode);
+    const self = e.target;
+    const parent = e.target.parentNode
+    if (self.nodeName !== 'IMG' || parent.classList[0] !== 'pic__smImgContainer') return;
+    const order = parseInt(e.target.dataset.order);
+    const name = imageData[order].lgSrc;
+    const str = `<img src="./images/${name}.jpg" alt="${name}" class="pic__lgImg" width="920" height="600">`;
+    elemPic.children[1].children[0].innerHTML = str;
+
   })
 }
